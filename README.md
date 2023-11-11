@@ -1,59 +1,49 @@
-# newuncion
- import discord
+import discord
 
 from discord.ext import commands
 
 import os, random
 
-import requests
-
 intents = discord.Intents.default()
 
 intents.message_content = True
 
- 
-
-bot = commands.Bot(command_prefix='$', intents=intents) # $mem  
-
- 
+bot = commands.Bot(command_prefix='!', intents=intents) # !mem
 
 @bot.event
-
 async def on_ready():
     print(f'We have logged in as {bot.user}')
 
-    
 
 @bot.command()
+async def hello(ctx):
+    await ctx.send(f'Приветствую тебя на моем дискорд канале для того, чтобы помочь планете.!')
+    await ctx.send(f'Тебе необходимо сделать 3 следующие вещи для того чтобы понизить количество выбрасываемых продуктов')
+    await ctx.send(f'Для инструкции введи !help')
 
-async def mem(ctx):
+@bot.command()
+async def help(ctx):
+    await ctx.send(f'Отправь в чат !One/!Two/!Three для получение 3 советов ')
+    await ctx.send(f'Отправь в чат !Bio для получение магазина биопродуктов')
+    await ctx.send(f'Отправь в чат !ecomem для получение мема про экологию')
 
-    img_name = random.choice(os.listdir('images'))
+@bot.command()
+async def Bio(ctx):
+    await ctx.send(f'Ссылка на биомагазин: http://www.rebio.ru/')
 
-    with open(f'images/{img_name}', 'rb') as f:
+@bot.command()
+async def One(ctx):
+    await ctx.send(f'Тебе необходимо понизить количество потребляемых продуктов откажись от употребления ненужных тебеэто поможет не только твоему кошельку но и планете')  
 
-        # В переменную кладем файл, который преобразуется в файл библиотеки Discord!
+@bot.command()
+async def Two(ctx):
+    await ctx.send(f'Повторно используя вещи которые тебе не нужны сейчас сделай из них например рассаду')
 
-        picture = discord.File(f)
+@bot.command()
+async def Three(ctx):
+    await ctx.send(f'И наконец 3 для самых богатых для того чтобы минимизировать урон планете своим мусорам он должен быть биоразлагаемым покупай продукцию в биоразлагаемых упаковках да это дорого но не так дорого как поплатятся все человечество через некоторое время ты можешь также заказывать подобную продукцию через маркетплейсы')
 
-   # Можем передавать файл как параметр!
-
-    await ctx.send(file=picture)
-
-def get_dog_image_url():    
-    url = 'https://random.dog'
-    res = requests.get(url)
-    data = res.json()
-    return data['url']
-
-
-@bot.command('dog')
-async def dog(ctx):
-    '''По команде duck вызывает функцию get_dog_image_url'''
-    image_url = get_dog_image_url()
-    await ctx.send(image_url)
-    
-    
 
 bot.run('')
+
 
